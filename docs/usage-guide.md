@@ -2,177 +2,147 @@
 
 ## Purpose
 
-Define the standard operator workflow for saving, searching, and retrieving memory across Codex sessions.
+Define the recommended operating workflow for memory capture and retrieval across Codex sessions.
 
-## Recommended Workflow
+## Daily Workflow
 
-1. Save important context during implementation.
-2. Run docs ingestion when project docs have meaningful updates.
-3. Search index results first.
-4. Use timeline to inspect nearby context.
-5. Fetch full details only for selected IDs.
+1. Save important decisions, fixes, and constraints with `save_memory`.
+2. Use `search` first for low-cost retrieval.
+3. Use `timeline` around promising entries.
+4. Use `get_entries` only for selected IDs.
+5. Periodically run `ingest_docs` for project docs.
 
-This keeps memory retrieval efficient and avoids unnecessary context expansion.
+This keeps memory useful and context size under control.
 
-## Ingestion Command
+## Tool Patterns
 
-Run:
+### `save_memory`
 
-```bash
-npm run ingest
-```
+Use for high-value context only.
 
-Default sources:
-
-- `docs/session-log.md`
-- `docs/decisions.md`
-- `docs/requirements.md`
-
-Behavior:
-
-- Imports content with source attribution metadata.
-- Dedupes entries by source path and content hash.
-
-## Retention Dry-Run
-
-Run:
-
-```bash
-RETENTION_MAX_AGE_DAYS=30 RETENTION_MAX_ENTRIES_PER_PROJECT=200 npm run retention:dry-run
-```
-
-Environment inputs:
-
-- `RETENTION_MAX_AGE_DAYS`: mark entries older than N days as candidates.
-- `RETENTION_MAX_ENTRIES_PER_PROJECT`: mark entries beyond newest N per project as candidates.
-- `RETENTION_PROJECT` (optional): limit analysis to one project.
-
-Behavior:
-
-- Does not delete any entries.
-- Writes an audit record in `retention_audit_events`.
-- Returns JSON report with candidate IDs and reason counts.
-
-## Tool Usage
-
-## `save_memory`
-
-Use when:
-
-- You make a key decision.
-- You discover a non-obvious fix.
-- You identify a reusable constraint or pattern.
-
-Input pattern:
+Example payload:
 
 ```json
 {
-  "text": "PostToolUse hook equivalent is unavailable in Codex, using manual capture in v1.",
-  "title": "Codex hook limitation",
-  "type": "architecture",
-  "source_ref": "docs/decisions.md"
+  "text": "Auth bug fixed by sending X-API-Key header in edge middleware.",
+  "title": "Auth header requirement",
+  "project": "codex-mem",
+  "type": "bugfix",
+  "source_ref": "docs/session-log.md",
+  "metadata": { "area": "auth" }
 }
 ```
 
-## `search`
+### `search`
 
-Use when:
-
-- You need prior context for a feature, bug, or decision.
-
-Input pattern:
+Start broad, then refine by `project` or `type`.
 
 ```json
 {
-  "query": "manual capture v1",
-  "limit": 20
+  "query": "auth header",
+  "project": "codex-mem",
+  "limit": 20,
+  "offset": 0
 }
 ```
 
-## `timeline`
+### `timeline`
 
-Use when:
-
-- You have an anchor entry ID and need surrounding context.
-
-Input pattern:
+Use around an anchor ID returned from search.
 
 ```json
 {
-  "anchor_id": "entry_123",
+  "anchor_id": "<entry-id>",
   "depth_before": 3,
   "depth_after": 3
 }
 ```
 
-## `get_entries`
+### `get_entries`
 
-Use when:
-
-- You have filtered IDs and need complete details.
-
-Input pattern:
+Fetch full details in batch.
 
 ```json
 {
-  "ids": ["entry_123", "entry_456"]
+  "ids": ["<entry-id-1>", "<entry-id-2>"]
 }
 ```
 
-## `ingest_docs`
+### `ingest_docs`
 
-Use when:
-
-- Project docs changed and memory should be refreshed from source files.
-
-Input pattern:
+Use when docs changed and should be captured.
 
 ```json
 {
   "project": "codex-mem",
-  "sources": ["docs/session-log.md", "docs/decisions.md", "docs/requirements.md"]
+  "sources": [
+    "docs/session-log.md",
+    "docs/decisions.md",
+    "docs/requirements.md"
+  ],
+  "entry_type": "ingestion"
 }
 ```
 
-## `retention_dry_run`
+Behavior:
 
-Use when:
+- Dedupes by `source_ref + content_hash`
+- Repeated ingestion of unchanged files yields duplicates, not new entries
 
-- You want retention candidate visibility without deleting anything.
+### `retention_dry_run`
 
-Input pattern:
+Use to inspect cleanup candidates safely.
 
 ```json
 {
   "project": "codex-mem",
+  "max_age_days": 30,
   "max_entries_per_project": 200
 }
 ```
 
-## Capture Guidelines
+Behavior:
 
-- Prefer concise, factual entries.
-- Include source references where possible.
-- Store decisions, constraints, and fixes, not noisy raw logs.
-- Avoid secrets, credentials, and personal data.
+- No deletion
+- Returns counts and candidate IDs
+- Records audit event for traceability
 
-## Query Guidelines
+## Capture Quality Guidelines
 
-- Start broad with `search`.
-- Narrow by project/type where supported.
-- Batch detail fetch calls instead of one-by-one retrieval.
-- Add new memory entries if an important result is missing.
+Save entries that are likely useful later:
 
-## Session Handoff Pattern
+- Architecture decisions
+- Non-obvious bug fixes
+- Integration constraints
+- Production runbook findings
+
+Avoid saving:
+
+- Raw noisy logs
+- Temporary dead-end experiments
+- Secrets or personal sensitive data
+
+## Cross-Session Handoff Pattern
 
 At end of session:
 
-1. Save major decisions and unresolved questions.
+1. Save key outcomes and open questions.
 2. Update `docs/session-log.md`.
-3. Save any operational gotchas discovered.
+3. Optionally run `ingest_docs` if docs changed substantially.
 
-At next session start:
+At start of next session:
 
-1. Search recent work topics.
-2. Pull timeline around most relevant entries.
-3. Fetch full details for selected IDs and continue execution.
+1. Search for recent topic markers.
+2. Use timeline around best match.
+3. Fetch full details for 2-5 relevant IDs.
+
+## Manual Verification Prompt Pack
+
+Use these prompts in Codex when verifying MCP wiring:
+
+1. `Use save_memory to save text "usage-check-<timestamp>" under project "manual-check".`
+2. `Use search with query "usage-check-<timestamp>" and project "manual-check".`
+3. `Use get_entries with the id from the previous result.`
+4. `Use timeline around that id with depth_before=1 and depth_after=1.`
+
+If all succeed, the operator workflow is healthy.

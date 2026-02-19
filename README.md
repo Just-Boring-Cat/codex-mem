@@ -1,25 +1,28 @@
 # codex-mem
 
-Persistent local memory for Codex workflows, built on MCP + SQLite.
+Persistent memory MCP server for Codex, local-first and SQLite-backed.
 
 [![CI](https://github.com/Just-Boring-Cat/codex-mem/actions/workflows/ci.yml/badge.svg)](https://github.com/Just-Boring-Cat/codex-mem/actions/workflows/ci.yml)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPLv3-blue.svg)](LICENSE)
 [![Node >= 20](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](package.json)
 
-`codex-mem` keeps project context across sessions with a token-efficient retrieval workflow:
+`codex-mem` helps you carry technical context across sessions with a simple memory workflow:
+`save_memory -> search -> timeline -> get_entries`.
 
-1. Save high-value memory entries.
-2. Search compact index results.
-3. Explore timeline around relevant anchors.
-4. Fetch full details only for selected IDs.
+## Why This Exists
 
-## Why codex-mem
+- Codex sessions are stateless by default.
+- Project decisions, fixes, and constraints get lost between sessions.
+- This server provides explicit memory tools so context can be captured and reused safely.
 
-- Local-first and private by default.
-- Fast keyword retrieval with SQLite FTS5.
-- Explicit policy checks for sensitive content.
-- Ingestion and retention workflows built into tools.
-- Test-covered migrations and error paths.
+## Core Features
+
+- Local SQLite persistence (`.memory/*.db`)
+- MCP tools for write, search, context expansion, and detail retrieval
+- Document ingestion with source/hash dedupe
+- Retention dry-run analysis without deletion
+- Policy filter for secret-like token patterns
+- Contract tests for MCP tool behavior
 
 ## Architecture
 
@@ -37,93 +40,105 @@ flowchart LR
 
 ## Quick Start
 
+### 1. Install
+
 ```bash
 npm install
+```
+
+### 2. Configure DB path
+
+Recommended local path:
+
+```bash
+export MEMORY_DB_PATH=.memory/codex-mem.db
+```
+
+Compatibility fallback is also supported:
+
+- `CODEX_MEM_DB_PATH`
+
+### 3. Run migration
+
+```bash
 npm run migrate
+```
+
+### 4. Start MCP server
+
+```bash
 npm run mcp:start
 ```
 
-## VS Code Extension MCP Config
+## Connect in VS Code Codex Extension
 
-Use this MCP server command in your Codex extension config:
+Use **Custom MCP (STDIO)** with these values:
 
-```json
-{
-  "mcpServers": {
-    "codex-mem": {
-      "command": "npm",
-      "args": ["run", "mcp:start", "--silent"],
-      "cwd": "/absolute/path/to/codex-mem"
-    }
-  }
-}
+- Name: `codex-mem`
+- Command to launch: `npm`
+- Arguments:
+  - `run`
+  - `mcp:start`
+  - `--silent`
+- Environment variables:
+  - `MEMORY_DB_PATH` = `.memory/codex-mem.db`
+- Working directory:
+  - Absolute path to this repository
+  - Example: `/Users/hgeorge/Downloads/DEVELOPMENT/codex-mem`
+
+Notes:
+
+- Keep `MEMORY_DB_PATH` relative to the selected working directory, or use an absolute DB path.
+- If tools do not appear, restart the MCP connection after saving config.
+
+## MCP Tools
+
+- `save_memory`: Save a normalized memory entry.
+- `search`: Search compact indexed entries.
+- `timeline`: Fetch nearby entries around an anchor ID.
+- `get_entries`: Fetch full entry payloads by IDs.
+- `ingest_docs`: Ingest selected docs with dedupe.
+- `retention_dry_run`: Produce retention candidates without deletion.
+
+Contract details: `docs/mcp-api-spec.md`
+
+## Manual Verification (No Test Runner)
+
+In any Codex session connected to this MCP server:
+
+1. Save a marker
+
+```text
+Use save_memory with text "manual-check-<timestamp>" and project "manual-check"
 ```
 
-## Tool Demo
+2. Search for it
 
-`save_memory`
-
-```json
-{
-  "text": "MVP release gate passed with 21 tests green.",
-  "title": "Release Gate",
-  "project": "codex-mem",
-  "type": "decision",
-  "source_ref": "manual"
-}
+```text
+Use search with query "manual-check-<timestamp>" and project "manual-check"
 ```
 
-`search`
+3. Fetch detail
 
-```json
-{
-  "query": "release gate",
-  "project": "codex-mem",
-  "limit": 10
-}
+```text
+Use get_entries with the returned id
 ```
 
-`ingest_docs`
+4. Cross-session verification
 
-```json
-{
-  "project": "codex-mem",
-  "sources": ["docs/session-log.md", "docs/decisions.md", "docs/requirements.md"]
-}
-```
+- Open a new Codex session.
+- Run `search` with the same marker.
+- If found, persistence across sessions is confirmed.
 
-`retention_dry_run`
-
-```json
-{
-  "project": "codex-mem",
-  "max_age_days": 30,
-  "max_entries_per_project": 200
-}
-```
-
-## Available MCP Tools
-
-- `save_memory`
-- `search`
-- `timeline`
-- `get_entries`
-- `ingest_docs`
-- `retention_dry_run`
-
-## Maintenance Commands
-
-```bash
-npm run ingest
-RETENTION_MAX_AGE_DAYS=30 RETENTION_MAX_ENTRIES_PER_PROJECT=200 npm run retention:dry-run
-```
-
-## Validation
+## Common Commands
 
 ```bash
 npm run lint
 npm run typecheck
-npm test
+npm run test
+npm run test:perf
+npm run ingest
+npm run retention:dry-run
 npm run audit:prod
 ```
 
@@ -133,15 +148,23 @@ Full dependency visibility:
 npm run audit:all
 ```
 
+## Data and Security Notes
+
+- Do not store real secrets, credentials, or private personal data in memory.
+- Secret-like payloads are blocked by policy checks.
+- Keep `.memory/` out of git (already ignored).
+- Review baseline controls in `docs/security-baseline.md`.
+
 ## Documentation
 
-- `docs/setup-guide.md`
-- `docs/usage-guide.md`
-- `docs/mcp-api-spec.md`
-- `docs/architecture.md`
-- `docs/data-model.md`
-- `docs/security-baseline.md`
-- `docs/operations-runbook.md`
+- `docs/README.md`: documentation map
+- `docs/setup-guide.md`: setup and MCP wiring
+- `docs/usage-guide.md`: daily workflows and patterns
+- `docs/troubleshooting.md`: issue diagnosis and fixes
+- `docs/operations-runbook.md`: backup, restore, and incident playbooks
+- `docs/architecture.md`: architecture overview
+- `docs/data-model.md`: data entities and storage model
+- `docs/mvp-spec.md`: MVP contract and scope
 
 ## Contributing
 

@@ -2,114 +2,129 @@
 
 ## Purpose
 
-Provide fast diagnostics for the most likely setup and runtime issues in v1.
+Provide fast diagnostics for the most common setup and runtime failures.
 
-## Symptom: MCP Tools Not Visible
-
-Checks:
-
-- Confirm MCP server command is registered in Codex.
-- Confirm server process starts without immediate exit.
-- Confirm tool names match spec in `docs/mcp-api-spec.md`.
-
-Actions:
-
-- Re-run MCP registration command.
-- Start server manually and inspect startup logs.
-- Validate configuration file paths.
-
-## Symptom: `save_memory` Fails With Policy Error
+## Symptom: MCP Server Connects but No Tools Appear
 
 Checks:
 
-- Input text may contain blocked secret-like patterns.
-- Policy filter may be too strict for current content.
+- Confirm transport is `STDIO`.
+- Confirm command is `npm`.
+- Confirm arguments are exactly:
+  - `run`
+  - `mcp:start`
+  - `--silent`
+- Confirm working directory points to this repository root.
 
 Actions:
 
-- Remove credential-like strings from payload.
-- Move sensitive values to external secure storage.
-- Review policy rules and false-positive cases.
+- Re-save MCP config and reconnect.
+- Run `npm run mcp:start` manually in terminal to verify startup.
+- Confirm dependencies installed: `npm install`.
 
-## Symptom: `search` Returns No Results
+## Symptom: MCP Connection Fails Immediately
 
 Checks:
 
-- No entries have been saved yet.
-- Query text does not match indexed content.
-- Project filter excludes available entries.
+- Invalid working directory.
+- Missing dependencies.
+- Node/npm not available in extension process environment.
 
 Actions:
 
-- Save a known test entry, then search for an exact phrase.
-- Retry without optional filters.
-- Verify FTS index exists and migrations completed.
+- Set absolute working directory path.
+- Run `node -v` and `npm -v` in same shell profile used by VS Code.
+- Reinstall dependencies and retry.
 
-## Symptom: `timeline` Returns Empty Items
+## Symptom: Data Not Persisting Across Sessions
 
 Checks:
 
-- Anchor ID does not exist.
-- Anchor exists but has no nearby entries.
+- `MEMORY_DB_PATH` may point to a different file in each session.
+- Relative DB path may resolve differently if working directory changed.
 
 Actions:
 
-- Confirm anchor ID via `search` first.
-- Increase `depth_before` and `depth_after`.
-- Save additional contextual entries for richer timelines.
+- Use a stable DB path, recommended `.memory/codex-mem.db`.
+- Keep working directory fixed to repo root.
+- For strict safety, use an absolute DB path.
 
-## Symptom: Data Lost After Restart
+## Symptom: `save_memory` Fails with `POLICY_BLOCKED`
 
 Checks:
 
-- DB path points to temporary or wrong directory.
-- Process runs with different working directory/config.
+- Payload likely includes a secret-like token pattern.
 
 Actions:
 
-- Set explicit `MEMORY_DB_PATH` (or fallback `CODEX_MEM_DB_PATH`).
-- Use a stable project-local `.memory/` path.
-- Confirm file permissions for DB directory.
+- Remove credential-like values from payload.
+- Store sensitive material in a secret manager, not memory DB.
+- Save a sanitized summary instead.
 
-## Symptom: Migration Failure On Startup
+## Symptom: `search` Returns Nothing
 
 Checks:
 
-- Existing DB has incompatible schema state.
-- Migration scripts are missing or out of order.
+- No entries saved yet.
+- Query is too narrow.
+- Incorrect `project` filter.
 
 Actions:
 
-- Run migration command directly and inspect error output.
-- Backup DB, then re-run from clean baseline if needed.
-- Add a migration repair note in `docs/session-log.md`.
+- Save a known marker entry and search exact marker.
+- Retry without `project` and `type` filters.
+- Run `npm run ingest` to populate docs-based memory.
 
-## Symptom: Slow Search Performance
+## Symptom: `timeline` Returns `ENTRY_NOT_FOUND`
 
 Checks:
 
-- Missing or invalid FTS index.
-- Query pattern forces full scan.
-- Entry volume exceeds expected baseline.
+- Anchor ID does not exist in current DB.
 
 Actions:
 
-- Verify index creation migration ran successfully.
-- Test with smaller scoped queries.
-- Profile query execution and add supporting indexes.
+- Retrieve anchor ID from a fresh `search` call.
+- Confirm you are using the same `MEMORY_DB_PATH` as during save.
 
-## Debug Checklist
+## Symptom: Migration Failure
 
-- Confirm runtime and dependency versions.
-- Confirm DB path and writable permissions.
-- Confirm migrations are up to date.
-- Confirm tool payloads match `docs/mcp-api-spec.md`.
-- Confirm errors are captured in structured logs.
+Checks:
+
+- Corrupt DB state.
+- File permissions issue.
+- Interrupted prior migration.
+
+Actions:
+
+- Backup DB file first.
+- Re-run `npm run migrate` and capture exact error.
+- If needed, restore from backup and retry.
+
+## Symptom: Retention Dry-Run Error `INVALID_ARGUMENT`
+
+Checks:
+
+- Both `max_age_days` and `max_entries_per_project` missing.
+
+Actions:
+
+- Provide at least one rule:
+  - `max_age_days > 0`
+  - or `max_entries_per_project > 0`
+
+## Fast Recovery Checklist
+
+1. `npm install`
+2. `export MEMORY_DB_PATH=.memory/codex-mem.db`
+3. `npm run migrate`
+4. `npm run mcp:start`
+5. Reconnect MCP in Codex
+6. Run save/search/get_entries smoke flow
 
 ## Escalation Rule
 
-If an issue repeats three times without root cause:
+If issue repeats three times without root cause:
 
-1. Document exact repro steps in `docs/session-log.md`.
-2. Add a focused test that reproduces the failure.
-3. Record mitigation decision in `docs/decisions.md` if architecture changes are required.
+1. Record exact repro in `docs/session-log.md`.
+2. Add or update a test that reproduces the issue.
+3. Capture decision or mitigation in `docs/decisions.md`.

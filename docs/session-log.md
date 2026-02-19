@@ -341,3 +341,27 @@
 ### Next Steps
 
 - Evaluate whether ingestion should support section-chunking for large docs in v1.1.
+
+## 2026-02-19 (Public Repo Documentation Sync)
+
+### Summary
+
+- Synced refined documentation set into the public `codex-mem` repository.
+- Upgraded root README with stronger onboarding, MCP setup, and manual verification guidance.
+- Updated setup, usage, troubleshooting, and documentation map for public-facing clarity.
+
+### Decisions
+
+- Keep the public README as primary onboarding document.
+- Keep deep technical details in `docs/` and link from README.
+- Keep VS Code custom MCP setup explicit with exact field values.
+
+### Open Questions
+
+- Whether to add screenshots/GIFs and badges beyond current set.
+- Whether to add `npm run smoke:live` helper command for one-shot manual verification.
+
+### Next Steps
+
+- Gather first external-user feedback on setup clarity.
+- Optionally add visual assets for architecture and tool flow.
