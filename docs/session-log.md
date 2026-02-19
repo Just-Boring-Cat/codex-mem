@@ -510,3 +510,21 @@
 ### Next Steps
 
 - Optionally enable Dependabot for automated dependency update PRs.
+
+## 2026-02-19 (v0.1.1 Release Cut and Dependabot Enablement)
+
+### Summary
+
+- Cut changelog release section for `0.1.1` from `Unreleased` entries.
+- Added Dependabot config at `.github/dependabot.yml` for npm and GitHub Actions updates.
+- Prepared repository metadata and release notes flow for v0.1.1 publishing.
+
+### Decisions
+
+- Keep Dependabot cadence weekly for both ecosystems.
+- Keep changelog links release-tag driven for clean compare URLs.
+
+### Next Steps
+
+- Publish GitHub release `v0.1.1`.
+- Perform manual VS Code MCP UX sanity check before broader promotion.
