@@ -52,6 +52,15 @@ bash scripts/install-mcp.sh --dry-run --no-register
 bash scripts/install-mcp.sh --name codex-mem --db-path .memory/codex-mem.db
 ```
 
+Empfohlener halbautomatischer Workflow:
+
+```bash
+npm run auto:mode -- start --ingest --project codex-mem
+npm run auto:mode -- end --summary "Sitzungsuebergabe zusammengefasst."
+npm run auto:mode -- commit
+npm run auto:install-hooks -- --project codex-mem
+```
+
 Manueller Pfad:
 
 ```bash
@@ -78,6 +87,8 @@ Werte fuer die MCP-Konfiguration in VS Code:
 - [CONTRIBUTING.md](../../CONTRIBUTING.md)
 - [LICENSE](../../LICENSE)
 - [scripts/install-mcp.sh](../../scripts/install-mcp.sh)
+- [scripts/auto-memory.sh](../../scripts/auto-memory.sh)
+- [scripts/install-git-hooks.sh](../../scripts/install-git-hooks.sh)
 - [SECURITY.md](../../SECURITY.md)
 - [CHANGELOG.md](../../CHANGELOG.md)
 - [.env.example](../../.env.example)
@@ -114,6 +125,7 @@ Werte fuer die MCP-Konfiguration in VS Code:
 ### API und Betrieb
 
 - [docs/mcp-api-spec.md](../mcp-api-spec.md)
+- [docs/auto-mode.md](../auto-mode.md)
 - [docs/setup-guide.md](../setup-guide.md)
 - [docs/usage-guide.md](../usage-guide.md)
 - [docs/troubleshooting.md](../troubleshooting.md)

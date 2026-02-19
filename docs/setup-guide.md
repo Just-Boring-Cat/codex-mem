@@ -27,6 +27,31 @@ bash scripts/install-mcp.sh --dry-run --no-register
 bash scripts/install-mcp.sh --name codex-mem --db-path .memory/codex-mem.db
 ```
 
+## 0.1) Automated Memory Helpers (Optional)
+
+Use helper workflows to reduce manual save/search steps:
+
+```bash
+npm run auto:mode -- start --ingest --project codex-mem
+npm run auto:mode -- end --summary "Session handoff summary here."
+npm run auto:mode -- commit
+```
+
+Install optional git post-commit hook for automatic commit capture:
+
+```bash
+npm run auto:install-hooks -- --project codex-mem
+```
+
+Dry-run preview:
+
+```bash
+npm run auto:mode -- start --dry-run --ingest --project codex-mem --limit 5
+npm run auto:mode -- end --dry-run --summary "Draft handoff"
+npm run auto:mode -- commit --dry-run
+npm run auto:install-hooks -- --dry-run
+```
+
 ## 1) Install Dependencies
 
 ```bash

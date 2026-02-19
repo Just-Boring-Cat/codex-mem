@@ -53,6 +53,37 @@ Actions:
   - `bash scripts/install-mcp.sh --dry-run`
 - If Codex CLI is missing, run installer with `--no-register` and register manually later.
 
+## Symptom: `npm run auto:mode -- commit` Fails
+
+Checks:
+
+- Not a git repository.
+- No commits available yet.
+- Hook running outside repository root.
+
+Actions:
+
+- Confirm git status works:
+  - `git status`
+  - `git log -1 --oneline`
+- Create first commit before using commit capture.
+- Reinstall hook from repo root:
+  - `npm run auto:install-hooks -- --project codex-mem`
+
+## Symptom: Auto Mode Saves to Wrong Project
+
+Checks:
+
+- `MEMORY_PROJECT_NAME` differs from intended project.
+- `--project` not passed to `auto:mode`.
+
+Actions:
+
+- Pass explicit project per run:
+  - `npm run auto:mode -- start --project codex-mem`
+- Or export default once:
+  - `export MEMORY_PROJECT_NAME=codex-mem`
+
 ## Symptom: Data Not Persisting Across Sessions
 
 Checks:

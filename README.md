@@ -23,6 +23,7 @@
 <p align="center">
   <a href="#quick-start">Quick Start</a> •
   <a href="#documentation">Documentation</a> •
+  <a href="#automatic-mode">Automatic Mode</a> •
   <a href="#architecture-design">Architecture Design</a> •
   <a href="#how-it-works">How It Works</a> •
   <a href="#mcp-search-tools">MCP Search Tools</a> •
@@ -52,6 +53,15 @@ bash scripts/install-mcp.sh --dry-run --no-register
 bash scripts/install-mcp.sh --name codex-mem --db-path .memory/codex-mem.db
 ```
 
+Automatic workflow helpers:
+
+```bash
+npm run auto:mode -- start --ingest --project codex-mem
+npm run auto:mode -- end --summary "Completed MCP setup docs and tests."
+npm run auto:mode -- commit
+npm run auto:install-hooks -- --project codex-mem
+```
+
 Manual install path:
 
 ```bash
@@ -78,6 +88,8 @@ VS Code MCP setup values:
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [LICENSE](LICENSE)
 - [scripts/install-mcp.sh](scripts/install-mcp.sh)
+- [scripts/auto-memory.sh](scripts/auto-memory.sh)
+- [scripts/install-git-hooks.sh](scripts/install-git-hooks.sh)
 - [SECURITY.md](SECURITY.md)
 - [CHANGELOG.md](CHANGELOG.md)
 - [.env.example](.env.example)
@@ -114,6 +126,7 @@ VS Code MCP setup values:
 ### API and Operations
 
 - [docs/mcp-api-spec.md](docs/mcp-api-spec.md)
+- [docs/auto-mode.md](docs/auto-mode.md)
 - [docs/setup-guide.md](docs/setup-guide.md)
 - [docs/usage-guide.md](docs/usage-guide.md)
 - [docs/troubleshooting.md](docs/troubleshooting.md)
@@ -135,6 +148,19 @@ VS Code MCP setup values:
 
 - [docs/public/codex-mem.png](docs/public/codex-mem.png)
 - [docs/public/codex-mem-wordmark.svg](docs/public/codex-mem-wordmark.svg)
+
+## Automatic Mode
+
+`codex-mem` currently supports a practical semi-automatic workflow:
+
+```bash
+npm run auto:mode -- start --project codex-mem --ingest
+npm run auto:mode -- end --project codex-mem --summary "Session handoff summary."
+npm run auto:mode -- commit --project codex-mem
+npm run auto:install-hooks -- --project codex-mem
+```
+
+See full details in [docs/auto-mode.md](docs/auto-mode.md).
 
 ## Architecture Design
 

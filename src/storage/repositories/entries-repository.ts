@@ -152,6 +152,43 @@ export class EntriesRepository {
     };
   }
 
+  listRecentEntries(options: { limit: number; project?: string; type?: string }): EntryIndexItem[] {
+    const filters: string[] = [];
+    const params: Record<string, unknown> = {
+      limit: options.limit,
+    };
+
+    if (options.project) {
+      filters.push("project = @project");
+      params.project = options.project;
+    }
+
+    if (options.type) {
+      filters.push("entry_type = @entry_type");
+      params.entry_type = options.type;
+    }
+
+    const whereSql = filters.length > 0 ? `WHERE ${filters.join(" AND ")}` : "";
+    const rows = this.db.prepare(
+      `
+      SELECT id, title, entry_type, project, created_at
+      FROM entries
+      ${whereSql}
+      ORDER BY created_at_unix_ms DESC, rowid DESC
+      LIMIT @limit
+    `,
+    ).all(params) as Array<Pick<SearchRow, "id" | "title" | "entry_type" | "project" | "created_at">>;
+
+    return rows.map((row) => ({
+      id: row.id,
+      title: row.title,
+      entryType: row.entry_type,
+      project: row.project,
+      createdAt: row.created_at,
+      score: 0,
+    }));
+  }
+
   getEntriesByIds(ids: string[]): EntryDetailItem[] {
     if (ids.length === 0) {
       return [];
