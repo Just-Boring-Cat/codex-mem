@@ -1,11 +1,13 @@
-<h1 align="center">codex-mem</h1>
+<h1 align="center">
+  <img src="docs/public/codex-mem.png" alt="codex-mem" width="420" />
+</h1>
 
 <p align="center"><strong>Persistent memory MCP server for Codex, local-first and SQLite-backed.</strong></p>
 
 <p align="center">
-  <a href="README.md"><strong>English</strong></a> |
-  <a href="docs/i18n/README.es.md"><strong>Espanol</strong></a> |
-  <a href="docs/i18n/README.de.md"><strong>Deutsch</strong></a>
+  <a href="README.md">🇺🇸 English</a> •
+  <a href="docs/i18n/README.es.md">🇪🇸 Español</a> •
+  <a href="docs/i18n/README.de.md">🇩🇪 Deutsch</a>
 </p>
 
 <p align="center">
@@ -15,50 +17,23 @@
 </p>
 
 <p align="center">
-  <a href="#quick-start">Quick Start</a> |
-  <a href="#vscode-mcp-setup">VS Code MCP Setup</a> |
-  <a href="#mcp-tools">MCP Tools</a> |
-  <a href="#manual-verification">Manual Verification</a> |
-  <a href="#documentation">Documentation</a>
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#how-it-works">How It Works</a> •
+  <a href="#mcp-search-tools">MCP Search Tools</a> •
+  <a href="#system-requirements">System Requirements</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#license">License</a>
 </p>
 
 ---
 
-`codex-mem` keeps project context across sessions with a practical workflow:
+`codex-mem` preserves project memory across Codex sessions with a simple progressive workflow:
 
-1. Save high-value context with `save_memory`.
-2. Search compact results with `search`.
-3. Expand local context around anchors with `timeline`.
-4. Fetch full details for selected IDs with `get_entries`.
-
-## Why codex-mem
-
-- Codex sessions are stateless by default.
-- Decisions, bug fixes, and constraints get lost between sessions.
-- This MCP server adds a local memory layer with explicit tools.
-
-## Core Features
-
-- Local SQLite persistence (`.memory/*.db`)
-- Six MCP tools for memory write, retrieval, and operations
-- Document ingestion with source/hash dedupe
-- Retention dry-run analysis without destructive deletion
-- Secret-pattern policy checks before persistence
-- Contract tests for stable MCP behavior
-
-## Architecture
-
-```mermaid
-flowchart LR
-  Session["Codex Session"] --> MCP["MCP Server"]
-  MCP --> Service["Memory Service"]
-  Service --> Policy["Policy Service"]
-  Service --> Storage["SQLite + FTS5"]
-  Service --> Ingest["Ingestion Service"]
-  Service --> Retain["Retention Service"]
-  Ingest --> Sources["Project Docs"]
-  Retain --> Storage
-```
+1. Save context with `save_memory`
+2. Search index results with `search`
+3. Expand surrounding context with `timeline`
+4. Fetch complete records with `get_entries`
 
 ## Quick Start
 
@@ -69,100 +44,99 @@ npm run migrate
 npm run mcp:start
 ```
 
-Compatibility fallback is supported:
+Use `CODEX_MEM_DB_PATH` if you need compatibility with older environment naming.
 
-- `CODEX_MEM_DB_PATH`
+### VS Code MCP Setup
 
-## VS Code MCP Setup
-
-Use **Connect to a custom MCP** with these fields:
+In **Connect to a custom MCP**:
 
 - Name: `codex-mem`
 - Transport: `STDIO`
-- Command to launch: `npm`
-- Arguments:
-  - `run`
-  - `mcp:start`
-  - `--silent`
-- Environment variables:
-  - `MEMORY_DB_PATH=.memory/codex-mem.db`
-- Working directory:
-  - Absolute path to this repository
-
-Example working directory:
-
-- `/Users/hgeorge/Downloads/DEVELOPMENT/codex-mem`
-
-## MCP Tools
-
-- `save_memory`: save normalized memory entries
-- `search`: retrieve compact indexed results
-- `timeline`: fetch surrounding entries around an anchor
-- `get_entries`: fetch full payloads for selected IDs
-- `ingest_docs`: ingest docs with dedupe
-- `retention_dry_run`: analyze retention candidates without deleting data
-
-Contract: `docs/mcp-api-spec.md`
-
-## Manual Verification
-
-In any Codex session connected to this MCP server:
-
-1. Save a marker:
-
-```text
-Use save_memory with text "manual-check-<timestamp>" and project "manual-check"
-```
-
-2. Search it:
-
-```text
-Use search with query "manual-check-<timestamp>" and project "manual-check"
-```
-
-3. Fetch details:
-
-```text
-Use get_entries with the returned id
-```
-
-4. Confirm cross-session persistence:
-
-- Open a new session
-- Run the same `search`
-- If found, persistence is verified
-
-## Common Commands
-
-```bash
-npm run lint
-npm run typecheck
-npm run test
-npm run test:perf
-npm run ingest
-npm run retention:dry-run
-npm run audit:prod
-npm run audit:all
-```
-
-## Data and Security Notes
-
-- Do not store secrets, credentials, or private personal data.
-- Secret-like patterns are blocked by policy checks.
-- Keep `.memory/` local and untracked.
-- Security baseline: `docs/security-baseline.md`
+- Command: `npm`
+- Arguments: `run`, `mcp:start`, `--silent`
+- Environment variable: `MEMORY_DB_PATH=.memory/codex-mem.db`
+- Working directory: absolute repo path
 
 ## Documentation
 
-- `docs/README.md`
-- `docs/setup-guide.md`
-- `docs/usage-guide.md`
-- `docs/troubleshooting.md`
-- `docs/operations-runbook.md`
-- `docs/architecture.md`
-- `docs/data-model.md`
-- `docs/mvp-spec.md`
+- `docs/setup-guide.md` - installation and MCP wiring
+- `docs/usage-guide.md` - memory capture/retrieval workflow
+- `docs/mcp-api-spec.md` - tool contract and payloads
+- `docs/architecture.md` - architecture and data flow
+- `docs/data-model.md` - entities and persistence model
+- `docs/troubleshooting.md` - diagnostics and recovery
+- `docs/security-baseline.md` - security controls
+- `docs/operations-runbook.md` - operational procedures
+
+## How It Works
+
+Core components:
+
+1. MCP server layer exposes memory tools to Codex.
+2. Memory service validates and normalizes tool payloads.
+3. Policy service blocks secret-like content patterns.
+4. SQLite + FTS5 stores entries and powers search.
+5. Ingestion service imports selected docs with hash dedupe.
+6. Retention service produces cleanup candidates in dry-run mode.
+
+Architecture reference: `docs/architecture.md`
+
+## MCP Search Tools
+
+Recommended 3-layer retrieval pattern:
+
+1. `search` - cheap index results for discovery
+2. `timeline` - local context around promising anchors
+3. `get_entries` - full details for selected IDs only
+
+Additional tools:
+
+- `save_memory` - store key outcomes, decisions, and constraints
+- `ingest_docs` - import docs with source/hash dedupe
+- `retention_dry_run` - retention analysis without deleting data
+
+Contract reference: `docs/mcp-api-spec.md`
+
+## System Requirements
+
+- Node.js 20+
+- npm
+- Local filesystem write access for `.memory/`
+- SQLite runtime support (via bundled dependency)
+
+## Configuration
+
+Primary environment variables:
+
+- `MEMORY_DB_PATH` (recommended)
+- `MEMORY_PROJECT_NAME` (optional)
+- `CODEX_MEM_DB_PATH` (fallback compatibility)
+- `CODEX_MEM_PROJECT_NAME` (fallback compatibility)
+
+## Troubleshooting
+
+If tools are missing or persistence fails, check:
+
+- MCP command/args and working directory
+- DB path consistency across sessions
+- migration status (`npm run migrate`)
+
+Detailed guide: `docs/troubleshooting.md`
 
 ## Contributing
 
-See `CONTRIBUTING.md`.
+Contributions are welcome.
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for behavior changes
+4. Update relevant docs
+5. Open a pull request
+
+Contributor guide: `CONTRIBUTING.md`
+
+## License
+
+This project is licensed under **AGPL-3.0**.
+
+See `LICENSE` for full terms.

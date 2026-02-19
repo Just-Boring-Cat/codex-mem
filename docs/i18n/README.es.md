@@ -2,16 +2,7 @@
 
 Memoria persistente para Codex con MCP + SQLite, orientada a uso local.
 
-[English](../../README.md) | [Espanol](README.es.md) | [Deutsch](README.de.md)
-
-## Resumen
-
-`codex-mem` permite mantener contexto técnico entre sesiones:
-
-1. Guardar contexto con `save_memory`
-2. Buscar con `search`
-3. Ampliar contexto con `timeline`
-4. Obtener detalle completo con `get_entries`
+[🇺🇸 English](../../README.md) • [🇪🇸 Español](README.es.md) • [🇩🇪 Deutsch](README.de.md)
 
 ## Inicio Rápido
 
@@ -22,15 +13,20 @@ npm run migrate
 npm run mcp:start
 ```
 
-## Configuración MCP en VS Code
+## Documentación
 
-Configura **Custom MCP (STDIO)** así:
+- `docs/setup-guide.md`
+- `docs/usage-guide.md`
+- `docs/mcp-api-spec.md`
+- `docs/architecture.md`
+- `docs/troubleshooting.md`
 
-- Nombre: `codex-mem`
-- Comando: `npm`
-- Argumentos: `run`, `mcp:start`, `--silent`
-- Variable de entorno: `MEMORY_DB_PATH=.memory/codex-mem.db`
-- Directorio de trabajo: ruta absoluta del repositorio
+## Cómo Funciona
+
+1. `save_memory` guarda contexto importante.
+2. `search` devuelve resultados compactos.
+3. `timeline` amplía contexto alrededor de un ancla.
+4. `get_entries` devuelve el detalle completo por ID.
 
 ## Herramientas MCP
 
@@ -41,18 +37,16 @@ Configura **Custom MCP (STDIO)** así:
 - `ingest_docs`
 - `retention_dry_run`
 
-## Verificación Manual
+## Requisitos del Sistema
 
-1. Guardar texto único (ejemplo: `manual-check-<timestamp>`)
-2. Buscar ese texto con `search`
-3. Consultar `get_entries` con el ID devuelto
-4. Abrir otra sesión y repetir la búsqueda
+- Node.js 20+
+- npm
+- Acceso de escritura local para `.memory/`
 
-Si aparece el registro en la segunda sesión, la persistencia funciona.
+## Contribuciones
 
-## Documentación
+Consulta `CONTRIBUTING.md`.
 
-- `docs/setup-guide.md`
-- `docs/usage-guide.md`
-- `docs/troubleshooting.md`
-- `docs/mcp-api-spec.md`
+## Licencia
+
+AGPL-3.0. Ver `LICENSE`.

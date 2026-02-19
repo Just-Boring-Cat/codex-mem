@@ -391,3 +391,34 @@
 
 - Collect feedback on readability and language-switch visibility.
 - Optionally expand Spanish and German pages into full docs translations.
+
+## 2026-02-19 (README Structure Expansion and Logo Integration)
+
+### Summary
+
+- Reworked public `README.md` to include the requested section structure:
+- Quick Start
+- Documentation
+- How It Works
+- MCP Search Tools
+- System Requirements
+- Contributing
+- License
+- Added provided project logo image at `docs/public/codex-mem.png` and integrated it as centered hero image.
+- Added flag-based language links for English, Spanish, and German.
+- Aligned localized i18n pages to the same high-level section rhythm.
+
+### Decisions
+
+- Keep GitHub-native layout (HTML + Markdown) for visual parity without external web assets.
+- Keep root README as canonical English source and keep i18n pages concise quick-start variants.
+
+### Open Questions
+
+- Whether to add a product screenshot/GIF preview block below the hero logo.
+- Whether to fully translate all docs beyond the quick-start i18n pages.
+
+### Next Steps
+
+- Gather feedback on readability and visual hierarchy.
+- Optionally add architecture/data-model rendered images for stronger visual scanability.
