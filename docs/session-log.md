@@ -489,3 +489,24 @@
 ### Next Steps
 
 - Consider adding a `--force-register` mode if future CLI behavior requires replacement workflows.
+
+## 2026-02-19 (Pre-Publish Hardening Pack)
+
+### Summary
+
+- Added `SECURITY.md` with private vulnerability reporting path and response targets.
+- Added `CHANGELOG.md` with `Unreleased` and `0.1.0` sections.
+- Added GitHub issue templates (`bug_report.yml`, `feature_request.yml`, `config.yml`).
+- Added `.github/pull_request_template.md` with validation checklist.
+- Hardened `.gitignore` for `.env` and `.env.*`, while keeping `.env.example` tracked.
+- Added `.env.example` as a safe configuration template.
+- Updated EN/ES/DE README docs sections and docs index to include new governance files.
+
+### Decisions
+
+- Keep security reports private via GitHub Security Advisories.
+- Keep changelog manually curated for early-stage release quality.
+
+### Next Steps
+
+- Optionally enable Dependabot for automated dependency update PRs.

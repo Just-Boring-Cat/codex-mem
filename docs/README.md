@@ -6,6 +6,11 @@ Primary public entry point:
 
 - `README.md` (repository root): onboarding, quick start, MCP setup, manual verification
 - `scripts/install-mcp.sh` (repository root): one-command automated MCP installer
+- `SECURITY.md` (repository root): vulnerability reporting policy
+- `CHANGELOG.md` (repository root): release and change history
+- `.env.example` (repository root): safe environment template
+- `.github/ISSUE_TEMPLATE/*`: bug/feature issue templates and config
+- `.github/pull_request_template.md`: pull request quality checklist
 
 ## Core Planning and Architecture
 

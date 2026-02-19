@@ -5,6 +5,9 @@ coverage/
 *.db
 *.db-shm
 *.db-wal
+.env
+.env.*
+!.env.example
 .context/
 .codex/
 AGENTS.override.md

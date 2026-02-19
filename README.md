@@ -78,6 +78,16 @@ VS Code MCP setup values:
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [LICENSE](LICENSE)
 - [scripts/install-mcp.sh](scripts/install-mcp.sh)
+- [SECURITY.md](SECURITY.md)
+- [CHANGELOG.md](CHANGELOG.md)
+- [.env.example](.env.example)
+
+### GitHub Collaboration
+
+- [.github/ISSUE_TEMPLATE/bug_report.yml](.github/ISSUE_TEMPLATE/bug_report.yml)
+- [.github/ISSUE_TEMPLATE/feature_request.yml](.github/ISSUE_TEMPLATE/feature_request.yml)
+- [.github/ISSUE_TEMPLATE/config.yml](.github/ISSUE_TEMPLATE/config.yml)
+- [.github/pull_request_template.md](.github/pull_request_template.md)
 
 ### Docs Index
 

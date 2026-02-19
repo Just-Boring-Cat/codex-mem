@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest an improvement for codex-mem
+title: "[feature] <short description>"
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What problem are you trying to solve?
+      placeholder: Describe the current limitation or pain point.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should codex-mem do?
+      placeholder: Describe desired behavior and expected impact.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workaround or alternative approach you've tried?
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Include usage context (project size, workflow, client integration, etc.)

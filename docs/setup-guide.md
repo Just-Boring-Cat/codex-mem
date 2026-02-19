@@ -37,6 +37,14 @@ npm install
 
 Set the DB path for this repo.
 
+You can copy from `.env.example`:
+
+```bash
+cp .env.example .env.local
+```
+
+Then export values in your shell if needed:
+
 ```bash
 export MEMORY_DB_PATH=.memory/codex-mem.db
 ```
