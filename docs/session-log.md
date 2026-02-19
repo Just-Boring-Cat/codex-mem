@@ -528,3 +528,20 @@
 
 - Publish GitHub release `v0.1.1`.
 - Perform manual VS Code MCP UX sanity check before broader promotion.
+
+## 2026-02-19 (Public Roadmap Added)
+
+### Summary
+
+- Added `docs/roadmap.md` with staged milestones from current MCP flow to full automatic memory mode.
+- Included scope, deliverables, success criteria, and risk constraints.
+- Linked roadmap from main README, docs index, and ES/DE i18n README pages.
+
+### Decisions
+
+- Keep roadmap execution-oriented with milestone outcomes rather than feature wishlists.
+- Treat full automation as an explicit R&D + production hardening path due to current MCP lifecycle constraints.
+
+### Next Steps
+
+- Start M2 implementation: session helper scripts, optional git hook integration, and retrieval presets.

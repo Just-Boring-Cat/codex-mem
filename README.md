@@ -96,6 +96,7 @@ VS Code MCP setup values:
 ### Planning and Product
 
 - [docs/project-plan.md](docs/project-plan.md)
+- [docs/roadmap.md](docs/roadmap.md)
 - [docs/requirements.md](docs/requirements.md)
 - [docs/mvp-spec.md](docs/mvp-spec.md)
 - [docs/delivery-plan.md](docs/delivery-plan.md)

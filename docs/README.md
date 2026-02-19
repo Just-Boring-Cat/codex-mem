@@ -15,6 +15,7 @@ Primary public entry point:
 ## Core Planning and Architecture
 
 - `docs/project-plan.md`: execution checklist and scope boundaries
+- `docs/roadmap.md`: staged plan toward semi-automatic and full automatic memory
 - `docs/requirements.md`: problem statement, goals, constraints, and v1 scope
 - `docs/architecture.md`: system architecture, components, and data flow
 - `docs/architecture-diagram.mmd`: architecture diagram (Mermaid)
