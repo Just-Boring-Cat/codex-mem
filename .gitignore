@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.memory/
+*.db
+*.db-shm
+*.db-wal
+.context/
+.codex/
+AGENTS.override.md
+.DS_Store

@@ -1,0 +1,59 @@
+erDiagram
+  projects ||--o{ sessions : has
+  projects ||--o{ entries : stores
+  projects ||--o{ ingestion_events : tracks
+  sessions ||--o{ entries : contains
+  entries ||--o{ entry_metadata : annotates
+  entries ||--o{ entry_links : links_from
+  entries ||--o{ entry_links : links_to
+
+  projects {
+    string id
+    string name
+    string root_path
+    datetime created_at
+    datetime updated_at
+  }
+
+  sessions {
+    string id
+    string project_id
+    string session_key
+    datetime started_at
+    datetime ended_at
+    string source
+  }
+
+  entries {
+    string id
+    string project_id
+    string session_id
+    string title
+    text body
+    string entry_type
+    string source_ref
+    datetime created_at
+  }
+
+  entry_metadata {
+    string entry_id
+    string key
+    string value
+  }
+
+  entry_links {
+    string id
+    string from_entry_id
+    string to_entry_id
+    string relation_type
+  }
+
+  ingestion_events {
+    string id
+    string project_id
+    string source_type
+    string source_path
+    string status
+    datetime processed_at
+    text error_text
+  }

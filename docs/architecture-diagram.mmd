@@ -1,0 +1,30 @@
+flowchart LR
+  User["User / Codex Session"] --> MCP["MCP Interface"]
+  MCP --> Service["Memory Service"]
+
+  Service --> Policy["Policy Layer"]
+  Policy --> Storage["Storage Layer (SQLite + FTS)"]
+
+  Service --> Ingest["Ingestion Layer"]
+  Ingest --> Sources["Project Sources (docs, logs)"]
+  Ingest --> Policy
+
+  Service --> Search["Search Flow"]
+  Search --> Storage
+
+  Service --> Timeline["Timeline Flow"]
+  Timeline --> Storage
+
+  Service --> Details["Details Flow"]
+  Details --> Storage
+
+  Service --> Save["Save Flow"]
+  Save --> Policy
+
+  subgraph LocalRuntime["Local Runtime"]
+    MCP
+    Service
+    Policy
+    Storage
+    Ingest
+  end

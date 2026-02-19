@@ -1,0 +1,44 @@
+{
+  "name": "codex-mem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test:watch": "vitest",
+    "lint": "eslint . --ext .ts",
+    "start": "tsx src/mcp/server.ts",
+    "migrate": "tsx src/storage/migrate.ts",
+    "mcp:start": "tsx src/mcp/server.ts",
+    "ingest": "tsx src/cli/ingest.ts",
+    "test:perf": "vitest run tests/performance/search-baseline.performance.test.ts",
+    "retention:dry-run": "tsx src/cli/retention-dry-run.ts",
+    "audit:prod": "npm audit --omit=dev --audit-level=high",
+    "audit:all": "npm audit --audit-level=high"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "better-sqlite3": "^12.6.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.2.3",
+    "eslint": "^10.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.0",
+    "vitest": "^4.0.18"
+  }
+}
