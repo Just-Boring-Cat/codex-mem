@@ -422,3 +422,27 @@
 
 - Gather feedback on readability and visual hierarchy.
 - Optionally add architecture/data-model rendered images for stronger visual scanability.
+
+## 2026-02-19 (README Top Title, Full Doc Links, About Panel, First Release Prep)
+
+### Summary
+
+- Updated README layout so `codex-mem` title is shown at the top with larger heading priority.
+- Kept logo directly below the title for clearer hierarchy.
+- Expanded documentation section to include clickable links for all docs in the repository.
+- Configured GitHub About metadata (description, homepage, and topics).
+- Prepared repository for first release publication with curated notes.
+
+### Decisions
+
+- Keep root README as primary navigation hub for all project documentation.
+- Use GitHub About panel to surface concise project value and discovery topics.
+
+### Open Questions
+
+- Whether to add additional i18n files beyond English/Spanish/German.
+- Whether to add an animated usage preview under the logo.
+
+### Next Steps
+
+- Publish first tagged release with concise highlights and source archives.

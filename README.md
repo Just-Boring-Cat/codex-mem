@@ -1,6 +1,8 @@
-<h1 align="center">
-  <img src="docs/public/codex-mem.png" alt="codex-mem" width="420" />
-</h1>
+<h1 align="center">codex-mem</h1>
+
+<p align="center">
+  <img src="docs/public/codex-mem.png" alt="codex-mem logo" width="260" />
+</p>
 
 <p align="center"><strong>Persistent memory MCP server for Codex, local-first and SQLite-backed.</strong></p>
 
@@ -28,12 +30,7 @@
 
 ---
 
-`codex-mem` preserves project memory across Codex sessions with a simple progressive workflow:
-
-1. Save context with `save_memory`
-2. Search index results with `search`
-3. Expand surrounding context with `timeline`
-4. Fetch complete records with `get_entries`
+`codex-mem` preserves project memory across Codex sessions with a practical progressive retrieval workflow.
 
 ## Quick Start
 
@@ -44,58 +41,93 @@ npm run migrate
 npm run mcp:start
 ```
 
-Use `CODEX_MEM_DB_PATH` if you need compatibility with older environment naming.
-
-### VS Code MCP Setup
-
-In **Connect to a custom MCP**:
+VS Code MCP setup values:
 
 - Name: `codex-mem`
 - Transport: `STDIO`
 - Command: `npm`
 - Arguments: `run`, `mcp:start`, `--silent`
 - Environment variable: `MEMORY_DB_PATH=.memory/codex-mem.db`
-- Working directory: absolute repo path
+- Working directory: absolute path to your `codex-mem` repository
 
 ## Documentation
 
-- `docs/setup-guide.md` - installation and MCP wiring
-- `docs/usage-guide.md` - memory capture/retrieval workflow
-- `docs/mcp-api-spec.md` - tool contract and payloads
-- `docs/architecture.md` - architecture and data flow
-- `docs/data-model.md` - entities and persistence model
-- `docs/troubleshooting.md` - diagnostics and recovery
-- `docs/security-baseline.md` - security controls
-- `docs/operations-runbook.md` - operational procedures
+### Root
+
+- [README.md](README.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [LICENSE](LICENSE)
+
+### Docs Index
+
+- [docs/README.md](docs/README.md)
+
+### Planning and Product
+
+- [docs/project-plan.md](docs/project-plan.md)
+- [docs/requirements.md](docs/requirements.md)
+- [docs/mvp-spec.md](docs/mvp-spec.md)
+- [docs/delivery-plan.md](docs/delivery-plan.md)
+- [docs/implementation-kickoff.md](docs/implementation-kickoff.md)
+
+### Architecture and Design
+
+- [docs/architecture.md](docs/architecture.md)
+- [docs/architecture-diagram.mmd](docs/architecture-diagram.mmd)
+- [docs/data-model.md](docs/data-model.md)
+- [docs/data-model-diagram.mmd](docs/data-model-diagram.mmd)
+- [docs/technical-design.md](docs/technical-design.md)
+- [docs/runtime-decision.md](docs/runtime-decision.md)
+
+### API and Operations
+
+- [docs/mcp-api-spec.md](docs/mcp-api-spec.md)
+- [docs/setup-guide.md](docs/setup-guide.md)
+- [docs/usage-guide.md](docs/usage-guide.md)
+- [docs/troubleshooting.md](docs/troubleshooting.md)
+- [docs/operations-runbook.md](docs/operations-runbook.md)
+- [docs/security-baseline.md](docs/security-baseline.md)
+- [docs/test-strategy.md](docs/test-strategy.md)
+
+### Project Logs
+
+- [docs/decisions.md](docs/decisions.md)
+- [docs/session-log.md](docs/session-log.md)
+
+### Internationalization
+
+- [docs/i18n/README.es.md](docs/i18n/README.es.md)
+- [docs/i18n/README.de.md](docs/i18n/README.de.md)
+
+### Brand Asset
+
+- [docs/public/codex-mem.png](docs/public/codex-mem.png)
 
 ## How It Works
 
-Core components:
-
-1. MCP server layer exposes memory tools to Codex.
-2. Memory service validates and normalizes tool payloads.
-3. Policy service blocks secret-like content patterns.
-4. SQLite + FTS5 stores entries and powers search.
-5. Ingestion service imports selected docs with hash dedupe.
-6. Retention service produces cleanup candidates in dry-run mode.
-
-Architecture reference: `docs/architecture.md`
+1. `save_memory` stores key decisions, fixes, and constraints.
+2. `search` returns compact index entries for low-cost discovery.
+3. `timeline` expands context around anchor entries.
+4. `get_entries` fetches full details only for selected IDs.
+5. `ingest_docs` imports docs with source/hash dedupe.
+6. `retention_dry_run` reports cleanup candidates without deleting data.
 
 ## MCP Search Tools
 
-Recommended 3-layer retrieval pattern:
+Recommended retrieval flow:
 
-1. `search` - cheap index results for discovery
-2. `timeline` - local context around promising anchors
-3. `get_entries` - full details for selected IDs only
+1. `search`
+2. `timeline`
+3. `get_entries`
 
-Additional tools:
+Available MCP tools:
 
-- `save_memory` - store key outcomes, decisions, and constraints
-- `ingest_docs` - import docs with source/hash dedupe
-- `retention_dry_run` - retention analysis without deleting data
-
-Contract reference: `docs/mcp-api-spec.md`
+- `save_memory`
+- `search`
+- `timeline`
+- `get_entries`
+- `ingest_docs`
+- `retention_dry_run`
 
 ## System Requirements
 
@@ -104,39 +136,18 @@ Contract reference: `docs/mcp-api-spec.md`
 - Local filesystem write access for `.memory/`
 - SQLite runtime support (via bundled dependency)
 
-## Configuration
-
-Primary environment variables:
-
-- `MEMORY_DB_PATH` (recommended)
-- `MEMORY_PROJECT_NAME` (optional)
-- `CODEX_MEM_DB_PATH` (fallback compatibility)
-- `CODEX_MEM_PROJECT_NAME` (fallback compatibility)
-
-## Troubleshooting
-
-If tools are missing or persistence fails, check:
-
-- MCP command/args and working directory
-- DB path consistency across sessions
-- migration status (`npm run migrate`)
-
-Detailed guide: `docs/troubleshooting.md`
-
 ## Contributing
-
-Contributions are welcome.
 
 1. Fork the repository
 2. Create a feature branch
-3. Add tests for behavior changes
-4. Update relevant docs
+3. Add or update tests
+4. Update docs for behavior changes
 5. Open a pull request
 
-Contributor guide: `CONTRIBUTING.md`
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-This project is licensed under **AGPL-3.0**.
+Licensed under **AGPL-3.0**.
 
-See `LICENSE` for full terms.
+See [LICENSE](LICENSE).
