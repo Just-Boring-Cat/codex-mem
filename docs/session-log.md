@@ -365,3 +365,29 @@
 
 - Gather first external-user feedback on setup clarity.
 - Optionally add visual assets for architecture and tool flow.
+
+## 2026-02-19 (README Visual Refresh and Multilingual Entry)
+
+### Summary
+
+- Refreshed public `README.md` with a more visual layout (centered header, badges, nav links).
+- Added language navigation for three languages: English, Espanol, German.
+- Added localized quick-start pages:
+- `docs/i18n/README.es.md`
+- `docs/i18n/README.de.md`
+- Updated docs map to include i18n entries.
+
+### Decisions
+
+- Keep English README as canonical source and add lightweight localized quick-start pages.
+- Keep i18n pages concise until full translated docs are needed.
+
+### Open Questions
+
+- Whether to add a `docs/i18n/README.en.md` mirror file for symmetry.
+- Whether to add visual assets (screenshots or GIF) to match hero style further.
+
+### Next Steps
+
+- Collect feedback on readability and language-switch visibility.
+- Optionally expand Spanish and German pages into full docs translations.

@@ -38,6 +38,11 @@ Primary public entry point:
 - `docs/decisions.md`: ADR-style decision log
 - `docs/session-log.md`: session-by-session progress log
 
+## I18N
+
+- `docs/i18n/README.es.md`: Espanol quick-start README
+- `docs/i18n/README.de.md`: German quick-start README
+
 ## Planning Flow
 
 1. Requirements
