@@ -1,7 +1,9 @@
-<h1 align="center">codex-mem</h1>
+<p align="center">
+  <img src="docs/public/codex-mem-wordmark.svg" alt="codex-mem" width="720" />
+</p>
 
 <p align="center">
-  <img src="docs/public/codex-mem.png" alt="codex-mem logo" width="260" />
+  <img src="docs/public/codex-mem.png" alt="codex-mem logo" width="220" />
 </p>
 
 <p align="center"><strong>Persistent memory MCP server for Codex, local-first and SQLite-backed.</strong></p>
@@ -21,6 +23,7 @@
 <p align="center">
   <a href="#quick-start">Quick Start</a> •
   <a href="#documentation">Documentation</a> •
+  <a href="#architecture-design">Architecture Design</a> •
   <a href="#how-it-works">How It Works</a> •
   <a href="#mcp-search-tools">MCP Search Tools</a> •
   <a href="#system-requirements">System Requirements</a> •
@@ -99,9 +102,45 @@ VS Code MCP setup values:
 - [docs/i18n/README.es.md](docs/i18n/README.es.md)
 - [docs/i18n/README.de.md](docs/i18n/README.de.md)
 
-### Brand Asset
+### Brand Assets
 
 - [docs/public/codex-mem.png](docs/public/codex-mem.png)
+- [docs/public/codex-mem-wordmark.svg](docs/public/codex-mem-wordmark.svg)
+
+## Architecture Design
+
+```mermaid
+flowchart LR
+  User["User / Codex Session"] --> MCP["MCP Interface"]
+  MCP --> Service["Memory Service"]
+
+  Service --> Policy["Policy Layer"]
+  Policy --> Storage["Storage Layer (SQLite + FTS)"]
+
+  Service --> Ingest["Ingestion Layer"]
+  Ingest --> Sources["Project Sources (docs, logs)"]
+  Ingest --> Policy
+
+  Service --> Search["Search Flow"]
+  Search --> Storage
+
+  Service --> Timeline["Timeline Flow"]
+  Timeline --> Storage
+
+  Service --> Details["Details Flow"]
+  Details --> Storage
+
+  Service --> Save["Save Flow"]
+  Save --> Policy
+
+  subgraph LocalRuntime["Local Runtime"]
+    MCP
+    Service
+    Policy
+    Storage
+    Ingest
+  end
+```
 
 ## How It Works
 

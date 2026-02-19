@@ -446,3 +446,27 @@
 ### Next Steps
 
 - Publish first tagged release with concise highlights and source archives.
+
+## 2026-02-19 (Premium README Upgrade Across EN/ES/DE)
+
+### Summary
+
+- Added styled wordmark asset `docs/public/codex-mem-wordmark.svg` with gradient and drop shadow.
+- Updated top README hero so title lettering is prominent and visually distinct.
+- Added explicit `Architecture Design` section with Mermaid diagram to main README.
+- Upgraded Spanish and German README pages to near parity with main README structure and depth.
+- Expanded EN/ES/DE docs sections to include complete linked document maps.
+
+### Decisions
+
+- Use SVG wordmark for title styling because GitHub README does not support custom CSS/font styling.
+- Keep logo below wordmark for clear visual hierarchy and fallback readability.
+
+### Open Questions
+
+- Whether to add rendered architecture/data-model PNG/SVG exports for users who cannot view Mermaid.
+
+### Next Steps
+
+- Collect feedback on readability and localization quality.
+- Optionally add additional premium i18n pages (French, Portuguese) after EN/ES/DE review.
