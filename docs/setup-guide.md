@@ -11,6 +11,22 @@ Provide a step-by-step setup path for running `codex-mem` locally and connecting
 - npm
 - SQLite 3 (optional CLI, DB engine is bundled through dependency)
 
+## 0) Automated Installer (Bash)
+
+Run one command to install dependencies, prepare DB path, run migrations, and attempt Codex MCP registration:
+
+```bash
+npm run mcp:install
+```
+
+Optional usage:
+
+```bash
+bash scripts/install-mcp.sh --help
+bash scripts/install-mcp.sh --dry-run --no-register
+bash scripts/install-mcp.sh --name codex-mem --db-path .memory/codex-mem.db
+```
+
 ## 1) Install Dependencies
 
 ```bash

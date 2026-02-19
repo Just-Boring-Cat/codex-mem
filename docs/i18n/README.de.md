@@ -37,6 +37,23 @@
 
 ## Schnellstart
 
+Automatische Installation mit einem Befehl:
+
+```bash
+npm run mcp:install
+```
+
+Installer-Optionen:
+
+```bash
+bash scripts/install-mcp.sh --help
+bash scripts/install-mcp.sh --dry-run
+bash scripts/install-mcp.sh --dry-run --no-register
+bash scripts/install-mcp.sh --name codex-mem --db-path .memory/codex-mem.db
+```
+
+Manueller Pfad:
+
 ```bash
 npm install
 export MEMORY_DB_PATH=.memory/codex-mem.db
@@ -60,6 +77,7 @@ Werte fuer die MCP-Konfiguration in VS Code:
 - [README.md](../../README.md)
 - [CONTRIBUTING.md](../../CONTRIBUTING.md)
 - [LICENSE](../../LICENSE)
+- [scripts/install-mcp.sh](../../scripts/install-mcp.sh)
 
 ### Docs-Index
 

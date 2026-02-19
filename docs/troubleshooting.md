@@ -36,6 +36,23 @@ Actions:
 - Run `node -v` and `npm -v` in same shell profile used by VS Code.
 - Reinstall dependencies and retry.
 
+## Symptom: `npm run mcp:install` Fails
+
+Checks:
+
+- `npm` not available in PATH.
+- `codex` CLI not installed (for auto registration step).
+- DB directory path cannot be created due to permissions.
+
+Actions:
+
+- Verify runtime tools:
+  - `node -v`
+  - `npm -v`
+- Re-run script in dry-run mode to inspect actions:
+  - `bash scripts/install-mcp.sh --dry-run`
+- If Codex CLI is missing, run installer with `--no-register` and register manually later.
+
 ## Symptom: Data Not Persisting Across Sessions
 
 Checks:

@@ -470,3 +470,22 @@
 
 - Collect feedback on readability and localization quality.
 - Optionally add additional premium i18n pages (French, Portuguese) after EN/ES/DE review.
+
+## 2026-02-19 (Automated MCP Installer Mirrored to Public Repo)
+
+### Summary
+
+- Added public installer script `scripts/install-mcp.sh` for one-command MCP setup.
+- Added npm alias command `npm run mcp:install`.
+- Added integration tests for installer help and dry-run behaviors.
+- Updated EN/ES/DE README quick-start sections to include automated install flow.
+- Updated setup, troubleshooting, and docs map references for installer usage.
+
+### Decisions
+
+- Keep installer registration step best-effort: gracefully skip when Codex CLI is unavailable.
+- Keep script option surface minimal: `--name`, `--db-path`, `--no-register`, `--dry-run`.
+
+### Next Steps
+
+- Consider adding a `--force-register` mode if future CLI behavior requires replacement workflows.

@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "lint": "eslint . --ext .ts",
     "start": "tsx src/mcp/server.ts",
+    "mcp:install": "bash scripts/install-mcp.sh",
     "migrate": "tsx src/storage/migrate.ts",
     "mcp:start": "tsx src/mcp/server.ts",
     "ingest": "tsx src/cli/ingest.ts",

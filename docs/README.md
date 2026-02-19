@@ -5,6 +5,7 @@ This directory is the implementation and operations source of truth for `codex-m
 Primary public entry point:
 
 - `README.md` (repository root): onboarding, quick start, MCP setup, manual verification
+- `scripts/install-mcp.sh` (repository root): one-command automated MCP installer
 
 ## Core Planning and Architecture
 
