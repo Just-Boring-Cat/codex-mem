@@ -127,6 +127,7 @@ VS Code MCP setup values:
 
 - [docs/mcp-api-spec.md](docs/mcp-api-spec.md)
 - [docs/auto-mode.md](docs/auto-mode.md)
+- [docs/auto-capture-wrapper.md](docs/auto-capture-wrapper.md)
 - [docs/setup-guide.md](docs/setup-guide.md)
 - [docs/usage-guide.md](docs/usage-guide.md)
 - [docs/troubleshooting.md](docs/troubleshooting.md)

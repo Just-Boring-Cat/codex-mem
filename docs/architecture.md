@@ -18,12 +18,14 @@
 - Storage Layer: SQLite with full-text search index and migration support.
 - Ingestion Layer: Parses selected project docs and logs into normalized memory entries.
 - Policy Layer: Applies exclusion, redaction, and retention rules before storage.
+- Wrapper Agent (planned): Captures session events, extracts durable context, and writes approved entries automatically.
 
 ## Data Flow Summary
 
 - Save Flow: Client calls memory tool, service validates and normalizes, policy filters, storage persists, index updates.
 - Search Flow: Client submits query, storage returns compact ranked index, user or agent selects IDs, detail fetch returns full entries.
 - Ingestion Flow: Ingestion layer reads configured sources, transforms to normalized entries, policy applies filters, service persists results.
+- Wrapper Capture Flow (planned): Session events enter wrapper, extractor proposes candidates, policy and dedupe gates run, approved entries are written with audit metadata.
 
 ## Diagram
 
@@ -46,6 +48,9 @@
 
 - Risk: Manual-first capture may miss useful context.
 - Tradeoff: Higher reliability and clearer privacy boundaries in v1.
+
+- Risk: Wrapper capture can create noisy entries if thresholds are weak.
+- Tradeoff: Better session continuity with tuneable policies and audit logs before full automatic mode.
 
 - Risk: Keyword-only retrieval may miss semantic matches.
 - Tradeoff: Lower complexity and easier debugging, semantic search deferred.

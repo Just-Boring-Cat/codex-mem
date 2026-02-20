@@ -17,7 +17,7 @@ Primary public entry point:
 ## Core Planning and Architecture
 
 - `docs/project-plan.md`: execution checklist and scope boundaries
-- `docs/roadmap.md`: staged plan toward semi-automatic and full automatic memory
+- `docs/roadmap.md`: staged plan toward wrapper-assisted and full automatic memory
 - `docs/requirements.md`: problem statement, goals, constraints, and v1 scope
 - `docs/architecture.md`: system architecture, components, and data flow
 - `docs/architecture-diagram.mmd`: architecture diagram (Mermaid)
@@ -32,6 +32,7 @@ Primary public entry point:
 - `docs/technical-design.md`: implementation-ready module and runtime design
 - `docs/mcp-api-spec.md`: MCP tool contract, payloads, and error model
 - `docs/auto-mode.md`: semi-automatic session and commit capture workflows
+- `docs/auto-capture-wrapper.md`: wrapper-agent draft for automatic session tracking
 - `docs/implementation-kickoff.md`: milestone kickoff sequence and readiness checklist
 
 ## Operations and Quality
