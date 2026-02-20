@@ -569,3 +569,27 @@
 
 - Add memory quality scoring loop for auto-captured entries.
 - Evaluate optional doc-watch ingest mode after pilot feedback.
+
+## 2026-02-20 (Wrapper Agent Draft Added)
+
+### Summary
+
+- Added `docs/auto-capture-wrapper.md` with wrapper-agent design draft for automatic session tracking.
+- Updated `docs/roadmap.md` to make wrapper auto-capture the next milestone.
+- Updated `docs/architecture.md` with planned wrapper component and capture flow.
+- Added links in `README.md` and `docs/README.md` so users can find the draft quickly.
+
+### Decisions
+
+- Use wrapper-agent mode as the interim path before fully native automatic capture.
+- Keep wrapper mode opt-in with clear capture policies (`off`, `assist`, `full`).
+
+### Open Questions
+
+- Which VS Code extension hooks can reliably expose session events.
+- Whether wrapper v1 should include optional encrypted local staging for candidate events.
+
+### Next Steps
+
+- Finalize wrapper event schema and confidence thresholds.
+- Define implementation tasks for adapter, policy gates, dedupe, and audit logging.

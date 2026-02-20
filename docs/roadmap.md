@@ -41,7 +41,7 @@ Success Criteria:
 
 - New users can install and run first save/search flow in under 10 minutes.
 
-## M2: Semi-Automatic Memory (Next)
+## M2: Semi-Automatic Memory (Completed)
 
 Goal:
 
@@ -64,11 +64,11 @@ Success Criteria:
 - 50%+ reduction in manual memory commands per session.
 - Consistent session handoff quality across contributors.
 
-## M3: Full Automation Prototype (R&D)
+## M3: Wrapper Agent Auto-Capture (Next)
 
 Goal:
 
-Prototype fully automatic memory using a controlled event capture layer (gateway/wrapper architecture).
+Implement an opt-in wrapper that captures session events and auto-saves durable summaries to memory.
 
 Deliverables:
 
@@ -81,11 +81,14 @@ Deliverables:
    - policy checks and redaction before write
 4. Auto-save orchestration:
    - writes to memory with audit trail
+5. Capture modes:
+   - `off`, `assist`, `full`
 
 Success Criteria:
 
-- End-to-end automatic save path works in a controlled environment.
+- Session memory capture works without manual reminders.
 - False-positive and false-negative rates are measurable and acceptable for pilot usage.
+- Sensitive data is blocked before persistence.
 
 ## M4: Production-Grade Automatic Mode
 
@@ -125,4 +128,6 @@ Success Criteria:
 
 1. [x] Add M2 session helper scripts and docs.
 2. [x] Add optional git-hook integration for memory capture.
-3. [ ] Add a pilot feedback loop for memory quality scoring.
+3. [ ] Implement wrapper event schema and adapter.
+4. [ ] Add policy and dedupe gates for wrapper candidates.
+5. [ ] Add pilot feedback loop for memory quality scoring.
