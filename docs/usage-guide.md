@@ -14,6 +14,31 @@ Define the recommended operating workflow for memory capture and retrieval acros
 
 This keeps memory useful and context size under control.
 
+## Automatic Mode (Recommended)
+
+Use the automation wrapper for repeatable start/end/session capture:
+
+```bash
+npm run auto:mode -- start --project codex-mem --ingest
+npm run auto:mode -- end --project codex-mem --summary "Finished contract tests and docs update."
+npm run auto:mode -- commit --project codex-mem
+```
+
+Commands:
+
+- `start`: optional ingestion plus recent memory bootstrap
+- `end`: stores a handoff entry (`type=handoff`)
+- `commit`: stores latest git commit context (`type=commit`)
+- `install-hook`: installs `.git/hooks/post-commit` integration
+
+Direct CLI equivalents:
+
+```bash
+npm run auto:bootstrap -- --project codex-mem --limit 8
+npm run auto:save -- --type handoff --project codex-mem --text "Handoff summary"
+npm run auto:capture:commit -- --project codex-mem
+```
+
 ## Tool Patterns
 
 ### `save_memory`

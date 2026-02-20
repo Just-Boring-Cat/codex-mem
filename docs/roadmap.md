@@ -123,6 +123,6 @@ Success Criteria:
 
 ## Immediate Next Tasks
 
-1. Add M2 session helper scripts and docs.
-2. Add optional git-hook integration for memory capture.
-3. Add a pilot feedback loop for memory quality scoring.
+1. [x] Add M2 session helper scripts and docs.
+2. [x] Add optional git-hook integration for memory capture.
+3. [ ] Add a pilot feedback loop for memory quality scoring.

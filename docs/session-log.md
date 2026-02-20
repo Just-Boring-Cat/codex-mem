@@ -545,3 +545,27 @@
 ### Next Steps
 
 - Start M2 implementation: session helper scripts, optional git hook integration, and retrieval presets.
+
+## 2026-02-19 (Semi-Automatic Memory Workflow Delivered)
+
+### Summary
+
+- Added `scripts/auto-memory.sh` with `start`, `end`, `commit`, and `install-hook` commands.
+- Added `scripts/install-git-hooks.sh` for optional post-commit capture automation.
+- Added new CLI commands:
+- `auto:save`
+- `auto:capture:commit`
+- `auto:bootstrap`
+- Added integration tests for auto-memory script dry-run and help behavior.
+- Added automation docs and linked updates across EN/ES/DE README variants and setup/usage docs.
+
+### Decisions
+
+- Keep automation mode explicit and opt-in while MCP lifecycle hooks remain limited.
+- Use git `post-commit` hook as the safest automation point available today.
+- Keep dry-run support on wrapper/install scripts for safe onboarding and auditability.
+
+### Next Steps
+
+- Add memory quality scoring loop for auto-captured entries.
+- Evaluate optional doc-watch ingest mode after pilot feedback.

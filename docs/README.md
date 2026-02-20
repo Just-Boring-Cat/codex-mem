@@ -6,6 +6,8 @@ Primary public entry point:
 
 - `README.md` (repository root): onboarding, quick start, MCP setup, manual verification
 - `scripts/install-mcp.sh` (repository root): one-command automated MCP installer
+- `scripts/auto-memory.sh` (repository root): start/end/commit automation helper
+- `scripts/install-git-hooks.sh` (repository root): installs optional post-commit capture hook
 - `SECURITY.md` (repository root): vulnerability reporting policy
 - `CHANGELOG.md` (repository root): release and change history
 - `.env.example` (repository root): safe environment template
@@ -29,6 +31,7 @@ Primary public entry point:
 - `docs/runtime-decision.md`: finalized v1 runtime selection and rationale
 - `docs/technical-design.md`: implementation-ready module and runtime design
 - `docs/mcp-api-spec.md`: MCP tool contract, payloads, and error model
+- `docs/auto-mode.md`: semi-automatic session and commit capture workflows
 - `docs/implementation-kickoff.md`: milestone kickoff sequence and readiness checklist
 
 ## Operations and Quality
