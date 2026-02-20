@@ -593,3 +593,28 @@
 
 - Finalize wrapper event schema and confidence thresholds.
 - Define implementation tasks for adapter, policy gates, dedupe, and audit logging.
+
+## 2026-02-20 (Wrapper Adapter Skeleton Implemented)
+
+### Summary
+
+- Added wrapper event schema parser in `src/wrapper/event-schema.ts`.
+- Added baseline candidate extractor in `src/wrapper/candidate-extractor.ts`.
+- Added session adapter in `src/wrapper/session-adapter.ts`.
+- Added local simulation CLI command `npm run wrapper:simulate`.
+- Added unit tests for schema parsing, candidate extraction, and adapter behavior.
+
+### Decisions
+
+- Keep extraction rules intentionally simple in v1 skeleton:
+  - `decision`
+  - `bugfix`
+  - `constraint`
+  - `open_question`
+- Keep wrapper simulation local-only and non-writing for safe iteration.
+
+### Next Steps
+
+- Add policy/redaction gate before candidate output.
+- Add dedupe fingerprinting and confidence threshold controls.
+- Add optional memory-write mode behind explicit flag for pilot testing.

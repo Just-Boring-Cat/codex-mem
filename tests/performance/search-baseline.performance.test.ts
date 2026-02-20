@@ -63,7 +63,9 @@ describe("search performance baseline", () => {
     }
 
     const p95 = percentile(durations, 95);
-    expect(p95).toBeLessThan(250);
+    // GitHub-hosted runners are noisier than local machines.
+    const p95ThresholdMs = process.env.CI === "true" ? 350 : 250;
+    expect(p95).toBeLessThan(p95ThresholdMs);
   }, 30_000);
 });
 
