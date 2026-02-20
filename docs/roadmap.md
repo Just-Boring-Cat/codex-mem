@@ -128,6 +128,6 @@ Success Criteria:
 
 1. [x] Add M2 session helper scripts and docs.
 2. [x] Add optional git-hook integration for memory capture.
-3. [ ] Implement wrapper event schema and adapter.
+3. [x] Implement wrapper event schema and adapter.
 4. [ ] Add policy and dedupe gates for wrapper candidates.
 5. [ ] Add pilot feedback loop for memory quality scoring.

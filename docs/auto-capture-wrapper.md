@@ -162,6 +162,8 @@ Audit log fields:
 Phase 1:
 
 - Implement event adapter and candidate extractor skeleton.
+- Add local simulation command:
+  - `npm run wrapper:simulate`
 
 Phase 2:
 

@@ -20,6 +20,7 @@
     "auto:save": "tsx src/cli/auto-save.ts",
     "auto:capture:commit": "tsx src/cli/auto-capture-commit.ts",
     "auto:bootstrap": "tsx src/cli/auto-bootstrap.ts",
+    "wrapper:simulate": "tsx src/cli/wrapper-simulate.ts",
     "auto:mode": "bash scripts/auto-memory.sh",
     "auto:install-hooks": "bash scripts/install-git-hooks.sh",
     "test:perf": "vitest run tests/performance/search-baseline.performance.test.ts",
