@@ -43,7 +43,7 @@
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^25.3.0",
     "eslint": "^10.0.0",
-    "tsx": "^4.21.0",
+    "tsx": "^4.22.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.0",
     "vitest": "^4.0.18"
